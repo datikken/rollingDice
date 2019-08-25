@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script
+  src="https://code.jquery.com/jquery-2.2.4.js"
+  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenLite.min.js"></script>
+    <title>pirate</title>
+</head>
+<body>
+    <div class="cloth">
+            <img src="" id="smile" alt="">
+    </div>
+    <style>
+    .cloth {
+        position: relative;
+        width: 250px;
+        height: 250px;
+        background: darkred;
+        overflow: hidden;
+    }
+    #smile{
+            width: 50px; 
+            height: 50px;
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+
+    <script>
+    var images = [
+        'kub30.png',
+        'kub29.png',
+        'kub28.png',
+        'kub27.png',
+        'kub26.png',
+        'kub25.png',
+        'kub24.png',
+        'kub23.png',
+        'kub22.png',
+        'kub21.png',
+        'kub20.png',
+        'kub19.png',
+        'kub18.png',
+        'kub17.png',
+        'kub16.png',
+        'kub15.png',
+        'kub14.png',
+        'kub13.png',
+        'kub12.png',
+        'kub11.png',
+        'kub9.png',
+        'kub8.png',
+        'kub7.png',
+        'kub6.png',
+        'kub5.png',
+        'kub4.png',
+        'kub3.png',
+        'kub2.png',
+        'kub1.png',
+        'kub.png',
+    ],
+    i = 0,
+    n = images.length;
+    
+    $(function () {
+        var i = 0;
+        setInterval(function () {
+            $("#smile").attr("src", images[i]);
+            i != images.lenght ? i++ : '';
+        }, 20);
+        TweenMax.to( $("#smile"), .85, { top:"25%", ease: Circ.easeOut, repeat: 0 });
+    });
+        
+    </script>
+</body>
+</html>
