@@ -8,12 +8,17 @@
   src="https://code.jquery.com/jquery-2.2.4.js"
   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
   crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./timer.css">
+  <link rel="stylesheet" href="./style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenLite.min.js"></script>
     <title>pirate</title>
 </head>
 <body>
+
     <div class="cloth">
+            <div id="timer-7"></div>
+
         <img src="" class="kub" alt="">
     </div>
     <div class="rollDices" onclick="roll()">Кинуть камни</div>
@@ -22,6 +27,11 @@
         padding: 0;
         margin: 0;
     }
+
+#timer-7 {
+    margin-top: 2rem;
+    margin-left: 2rem;
+}
     .rollDices {
         border-radius: 1rem;
         border: 1px solid;
@@ -56,7 +66,13 @@
  
     </style>
 
+    <script src="./timer.js"></script>
     <script>
+
+    $(document).ready(function () {
+        $('#timer-7').timer({duration: 30, unit: 's'});
+    });
+
     var images = [
         'kub/kub30.png',
         'kub/kub29.png',
@@ -90,7 +106,7 @@
         'kub/kub.png',
     ]
 
-    var c, k;
+    var c;
     var l = 0;
     var el;
     var arr = []
@@ -118,9 +134,6 @@
 function roll() {
     var a, b, speed, height;
 
-    height  = Math.floor(20 + Math.random()*(60 + 1 - 20));
-    height2 = Math.floor(15 + Math.random()*(60 + 1 - 15));
-    left    = Math.floor(20 + Math.random()*(60 + 1 - 20));
     speed   = Math.floor(200 + Math.random()*(400 + 1 - 200));
     b       = Math.random() * (1 - .7) + .7;
     a       = speed / n;
@@ -132,35 +145,12 @@ function roll() {
                     i != images.lenght ? i++ : '';
                 }, a);  
 
-                var iter = height;
-                var iter2 = left;
+                var iter = 20;
 
                 $('.kub').each(function(i, el) {
-
-                    console.log(el);
-
-                    var rdn   = Math.floor(10 + Math.random()*(15 + 10 - 10));
-                    var sign  = Boolean(Math.round(Math.random()));
-
-                    console.log(sign);
-
-                    if(sign) {
-                        iter = iter + rdn;
-                        iter2 = iter2 + rdn;
-
-                        if(iter >= 100) {
-                            iter = 90;
-                        }
-                    } else {
-                        iter = iter - rdn;
-                        iter2 = iter2 - rdn;
-                        
-                        if(iter <= 0) {
-                            iter = 10;
-                        }
-                    }
-
-                    TweenMax.to(el, b / 1.45, { top: iter + "%", left: iter2 + "%",  ease: Circ.easeOut, repeat: 0 });
+                    iter = iter + 12;
+                    rand  = Math.floor(20 + Math.random()*(60 + 1 - 20));
+                    TweenMax.to(el, b / 1.45, { top: rand + "%", left: iter + "%",  ease: Circ.easeOut, repeat: 0 });
                 })
             }
 
