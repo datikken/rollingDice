@@ -14,71 +14,177 @@
 </head>
 <body>
     <div class="cloth">
-            <img src="" id="smile" alt="">
+        <img src="" class="kub" alt="">
     </div>
+    <div class="rollDices" onclick="roll()">Кинуть камни</div>
     <style>
+    body {
+        padding: 0;
+        margin: 0;
+    }
+    .rollDices {
+        border-radius: 1rem;
+        border: 1px solid;
+        width: 100px;
+        padding: .5rem;
+        margin-top: .5rem;
+        position: absolute;
+        bottom: 100px;
+        left: 100px;
+    }
     .cloth {
         position: relative;
-        width: 250px;
-        height: 250px;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        /* left: 50%;
+        top: 50%;
+        transform: translate(-50%); */
+        /* margin-top: 10rem; */
         background: darkred;
         overflow: hidden;
     }
-    #smile{
-            width: 50px; 
-            height: 50px;
-            position: absolute;
-            bottom: -100px;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+    .kub {
+        width: 50px; 
+        height: 50px;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        bottom: -100px;
+        left: 20%;
+        margin: .5rem;
+    }
+ 
     </style>
 
     <script>
     var images = [
-        'kub30.png',
-        'kub29.png',
-        'kub28.png',
-        'kub27.png',
-        'kub26.png',
-        'kub25.png',
-        'kub24.png',
-        'kub23.png',
-        'kub22.png',
-        'kub21.png',
-        'kub20.png',
-        'kub19.png',
-        'kub18.png',
-        'kub17.png',
-        'kub16.png',
-        'kub15.png',
-        'kub14.png',
-        'kub13.png',
-        'kub12.png',
-        'kub11.png',
-        'kub9.png',
-        'kub8.png',
-        'kub7.png',
-        'kub6.png',
-        'kub5.png',
-        'kub4.png',
-        'kub3.png',
-        'kub2.png',
-        'kub1.png',
-        'kub.png',
-    ],
+        'kub/kub30.png',
+        'kub/kub29.png',
+        'kub/kub28.png',
+        'kub/kub27.png',
+        'kub/kub26.png',
+        'kub/kub25.png',
+        'kub/kub24.png',
+        'kub/kub23.png',
+        'kub/kub22.png',
+        'kub/kub21.png',
+        'kub/kub20.png',
+        'kub/kub19.png',
+        'kub/kub18.png',
+        'kub/kub17.png',
+        'kub/kub16.png',
+        'kub/kub15.png',
+        'kub/kub14.png',
+        'kub/kub13.png',
+        'kub/kub12.png',
+        'kub/kub11.png',
+        'kub/kub9.png',
+        'kub/kub8.png',
+        'kub/kub7.png',
+        'kub/kub6.png',
+        'kub/kub5.png',
+        'kub/kub4.png',
+        'kub/kub3.png',
+        'kub/kub2.png',
+        'kub/kub1.png',
+        'kub/kub.png',
+    ]
+
+    var c, k;
+    var l = 0;
+    var el;
+    var arr = []
+  
     i = 0,
     n = images.length;
+
+    function _clone() {
+       el = $('.kub').clone().css('left', l);
+       arr.push(el)
+    }
+
+    for (c = 0; c < 4; c++) { 
+       var l = l + 20;
+       _clone();
+    }
     
-    $(function () {
-        var i = 0;
-        setInterval(function () {
-            $("#smile").attr("src", images[i]);
-            i != images.lenght ? i++ : '';
-        }, 20);
-        TweenMax.to( $("#smile"), .85, { top:"25%", ease: Circ.easeOut, repeat: 0 });
-    });
-        
+    var css = 0;
+
+    $(arr).each(function(i, el) {
+        css = css + 20
+        el.appendTo('.cloth').css('left', css);
+    })
+
+function roll() {
+    var a, b, speed, height;
+
+    height  = Math.floor(20 + Math.random()*(60 + 1 - 20));
+    height2 = Math.floor(15 + Math.random()*(60 + 1 - 15));
+    left    = Math.floor(20 + Math.random()*(60 + 1 - 20));
+    speed   = Math.floor(200 + Math.random()*(400 + 1 - 200));
+    b       = Math.random() * (1 - .7) + .7;
+    a       = speed / n;
+
+    function _handle_roll(a, b) {
+                var i = 0;
+                setInterval(function () {
+                    $(".kub").attr("src", images[i]);
+                    i != images.lenght ? i++ : '';
+                }, a);  
+
+                var iter = height;
+                var iter2 = left;
+
+                $('.kub').each(function(i, el) {
+
+                    console.log(el);
+
+                    var rdn   = Math.floor(10 + Math.random()*(15 + 10 - 10));
+                    var sign  = Boolean(Math.round(Math.random()));
+
+                    console.log(sign);
+
+                    if(sign) {
+                        iter = iter + rdn;
+                        iter2 = iter2 + rdn;
+
+                        if(iter >= 100) {
+                            iter = 90;
+                        }
+                    } else {
+                        iter = iter - rdn;
+                        iter2 = iter2 - rdn;
+                        
+                        if(iter <= 0) {
+                            iter = 10;
+                        }
+                    }
+
+                    TweenMax.to(el, b / 1.45, { top: iter + "%", left: iter2 + "%",  ease: Circ.easeOut, repeat: 0 });
+                })
+            }
+
+    function _clear_and_roll() {
+        new Promise((resolve, reject) => {
+
+            $(".kub").css('top','')
+            $(".kub").css('left','')
+
+            resolve();
+        })
+        .then(() => {
+            _handle_roll(a,b);
+        })
+    }
+
+    _clear_and_roll();
+
+    }
+
+
+
+
+  
     </script>
 </body>
 </html>
